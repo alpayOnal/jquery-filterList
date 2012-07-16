@@ -1,0 +1,48 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="jquery-filterList.js"></script>
+</head>
+
+<body>
+
+<h4>The first example List</h4>
+<ul class="list1">
+	<li>Masa</li>
+	<li>Sehpa</li>
+	<li>Sandalye</li>
+	<li>Sancak</li>
+	<li>Maşa</li>
+	<li>Kırmızı sehpa</li>
+	<li>Sehpa bacağı</li>
+</ul>
+
+<!-- with container -->
+<h4>The first example List</h4>
+<ul class="list2">
+	<li>Masa</li>
+	<li>Sehpa</li>
+	<li>Sandalye</li>
+	<li>Sancak</li>
+	<li>Maşa</li>
+	<li>Kırmızı sehpa</li>
+	<li>Sehpa bacağı</li>
+</ul>
+<div id="container"></div>
+
+<script>
+$(document).ready(function(){
+	
+	$('.list1').filterList();
+
+	$('.list2').filterList({
+		'container':$('#container')
+	});
+
+});
+</script>
+
+</body>
+
+</html>
