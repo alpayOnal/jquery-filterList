@@ -8,15 +8,20 @@
  * */
 (function($){
 
-	// making jquery contains case insensitive
-	jQuery.expr[':'].Contains = function(a, i, m) {
-		return jQuery(a).text().toUpperCase().indexOf(m[3].toUpperCase()) >= 0; 
-	};
+	// creating a jquery's filter function named icontains for case insensitive search
+	jQuery.expr[":"].icontains = jQuery.expr.createPseudo(function (arg) {                                                                                                                                                                
+		return function (elem) {                                                            
+			return jQuery(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;        
+		};                                                                                  
+	});
 	
 	$.fn.filterList=function(settings){
 		
 		var settings=$.extend({
-			'container':null
+			'container':null,
+			itemTag: '*',
+			speed: 'fast',
+			placeHolder: 'type to filter'
 		}, settings);
 		
 		this.each(function(){
@@ -26,15 +31,16 @@
 			if(list.hasClass('_filterList'))
 				return;
 			
-			var tbox=$('<input class="_filterListTBox" type="text"  />');
+			var tbox=$('<input class="_filterListTBox" type="text"  '
+				+'placeholder="'+settings.placeHolder+'" />');
 			
 			tbox.bind('keyup change',function(){
 				var keyword=$(this).val();
 				if(keyword==''){
-					list.find('*').slideDown();
+					list.find(settings.itemTag).slideDown();
 				}else{
-					var m=list.find(':Contains('+keyword+')').slideUp();
-					list.find('*').not(m).slideDown();
+					var m=list.find(settings.itemTag+':icontains('+keyword+')').slideDown(settings.speed);
+					list.find(settings.itemTag).not('._filterListTBox').not(m).slideUp(settings.speed);
 				}
 			});
 
